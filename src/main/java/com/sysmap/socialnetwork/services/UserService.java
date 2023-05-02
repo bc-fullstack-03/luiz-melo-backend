@@ -39,6 +39,23 @@ public class UserService {
 		return repository.save(user);
 	}
 	
+	@Transactional
+	public UserDTO update(UUID id, UserDTO request) {
+		User user = repository.findById(id).get();
+		BeanUtils.copyProperties(request, user);
+		//var user = convertDtoToModel(userDTO, userOptional.get());
+		user =  repository.save(user);
+		return new UserDTO(user);
+	}
+	
+	@Transactional
+	public User convertDtoToModel(UserDTO request, User user) {
+		user.setName(request.getName());	
+		user.setEmail(request.getEmail());
+		user.setPassword(request.getPassword());
+		user.setProfilePictureUri(request.getProfilePictureUri());
+		return user;
+	}
 	
 	
 }

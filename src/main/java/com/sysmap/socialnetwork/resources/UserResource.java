@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,11 +41,18 @@ public class UserResource {
 	}
 	
 	@PostMapping()
-	public ResponseEntity<Void> insert(@RequestBody UserDTO request) {
+	public ResponseEntity<UUID> insert(@RequestBody UserDTO request) {
 		service.insert(request);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(request)
 				.toUri();
-		return ResponseEntity.created(uri).build();
+		return ResponseEntity.created(uri).body(request.getId());
 	}
+	
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<UUID> update(@PathVariable UUID id, @RequestBody UserDTO request) {
+		service.update(id, request);
+		return ResponseEntity.ok(request.getId());
+	}
+	
 	
 }
