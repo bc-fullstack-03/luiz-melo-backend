@@ -57,5 +57,12 @@ public class UserService {
 		return user;
 	}
 	
-	
+	@Transactional
+	public void delete(UUID id) {
+		try {
+			repository.deleteById(id);
+		} catch (NotFoundException e) {
+			throw new NotFoundException("id not found" + id);
+		}
+	}
 }
