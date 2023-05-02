@@ -3,6 +3,7 @@ package com.sysmap.socialnetwork.services;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sysmap.socialnetwork.model.User;
+import com.sysmap.socialnetwork.model.dto.UserDTO;
 import com.sysmap.socialnetwork.repositories.UserRepository;
 import com.sysmap.socialnetwork.services.exception.NotFoundException;
 
@@ -29,5 +31,14 @@ public class UserService {
 		Optional<User> user = repository.findById(id);
 		return user.orElseThrow(() -> new NotFoundException("Id not found"));
 	}
+	
+	@Transactional
+	public User insert(UserDTO request) {
+		User user = new User();
+		BeanUtils.copyProperties(request, user);
+		return repository.save(user);
+	}
+	
+	
 	
 }

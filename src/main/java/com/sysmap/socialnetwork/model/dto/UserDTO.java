@@ -1,4 +1,4 @@
-package com.sysmap.socialnetwork.model.response;
+package com.sysmap.socialnetwork.model.dto;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -13,18 +13,22 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserResponse implements Serializable{
+public class UserDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Setter(AccessLevel.NONE)
 	private UUID id;
 	private String name;
+	private String email;
+	private String password;
 	private String profilePictureUri;
-	
-	public   UserResponse (User entity) {
+
+	public UserDTO(User entity) {
 		id = entity.getId();
 		name = entity.getName();
+		email = entity.getEmail();
+		password = entity.getPassword();
 		profilePictureUri = entity.getProfilePictureUri();
 	}
-	
+
 }
