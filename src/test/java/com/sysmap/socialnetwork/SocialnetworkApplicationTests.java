@@ -1,10 +1,10 @@
-package com.sysmap.lucarlosmelo;
+package com.sysmap.socialnetwork;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class LucarlosmeloApplicationTests {
+class SocialnetworkApplicationTests {
 
 	@Test
 	void contextLoads() {

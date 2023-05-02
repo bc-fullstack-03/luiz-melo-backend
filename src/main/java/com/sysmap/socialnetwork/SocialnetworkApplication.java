@@ -1,13 +1,13 @@
-package com.sysmap.lucarlosmelo;
+package com.sysmap.socialnetwork;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class LucarlosmeloApplication {
+public class SocialnetworkApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LucarlosmeloApplication.class, args);
+		SpringApplication.run(SocialnetworkApplication.class, args);
 	}
 
 }
