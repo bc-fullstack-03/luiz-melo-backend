@@ -17,46 +17,37 @@ import com.sysmap.socialnetwork.services.exception.NotFoundException;
 
 @Service
 public class UserService {
-	
+
 	@Autowired
 	private UserRepository repository;
-	
+
 	@Transactional(readOnly = true)
-	public Page<User> findAllPaged(Pageable pageable){
+	public Page<User> findAllPaged(Pageable pageable) {
 		return repository.findAll(pageable);
 	}
-	 
+
 	@Transactional(readOnly = true)
 	public User findById(UUID id) {
 		Optional<User> user = repository.findById(id);
 		return user.orElseThrow(() -> new NotFoundException("Id not found"));
 	}
-	
+
 	@Transactional
 	public User insert(UserDTO request) {
 		User user = new User();
 		BeanUtils.copyProperties(request, user);
 		return repository.save(user);
 	}
-	
+
 	@Transactional
 	public UserDTO update(UUID id, UserDTO request) {
 		User user = repository.findById(id).get();
-		BeanUtils.copyProperties(request, user);
-		//var user = convertDtoToModel(userDTO, userOptional.get());
-		user =  repository.save(user);
+		convertDtoToModel(request, user);
+		// var user = convertDtoToModel(userDTO, userOptional.get());
+		user = repository.save(user);
 		return new UserDTO(user);
 	}
-	
-	@Transactional
-	public User convertDtoToModel(UserDTO request, User user) {
-		user.setName(request.getName());	
-		user.setEmail(request.getEmail());
-		user.setPassword(request.getPassword());
-		user.setProfilePictureUri(request.getProfilePictureUri());
-		return user;
-	}
-	
+
 	@Transactional
 	public void delete(UUID id) {
 		try {
@@ -65,4 +56,12 @@ public class UserService {
 			throw new NotFoundException("id not found" + id);
 		}
 	}
+
+	public void convertDtoToModel(UserDTO request, User user) {
+		user.setName(request.getName());
+		user.setEmail(request.getEmail());
+		user.setPassword(request.getPassword());
+		user.setProfilePictureUri(request.getProfilePictureUri());
+	}
+
 }
