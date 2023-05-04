@@ -6,8 +6,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-import com.sysmap.socialnetwork.model.dto.AuthorDTO;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,7 +21,7 @@ public class Comment implements Serializable {
 	
 	private Set<Like> likes = new HashSet<>();
 	
-	public Comment(String content, AuthorDTO author) {
+	public Comment(String content, Author author) {
 		this.content = content;
 		date = LocalDateTime.now();
 		authorId = author.getUserId();

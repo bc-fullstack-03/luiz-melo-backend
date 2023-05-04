@@ -10,8 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sysmap.socialnetwork.model.User;
-import com.sysmap.socialnetwork.model.dto.UserDTO;
+import com.sysmap.socialnetwork.model.user.User;
+import com.sysmap.socialnetwork.model.user.UserRequest;
 import com.sysmap.socialnetwork.repositories.UserRepository;
 import com.sysmap.socialnetwork.services.exception.NotFoundException;
 
@@ -33,19 +33,19 @@ public class UserService {
 	}
 
 	@Transactional
-	public User insert(UserDTO request) {
+	public User insert(UserRequest request) {
 		User user = new User();
 		BeanUtils.copyProperties(request, user);
 		return repository.save(user);
 	}
 
 	@Transactional
-	public UserDTO update(UUID id, UserDTO request) {
+	public UserRequest update(UUID id, UserRequest request) {
 		User user = repository.findById(id).get();
 		convertDtoToModel(request, user);
 		// var user = convertDtoToModel(userDTO, userOptional.get());
 		user = repository.save(user);
-		return new UserDTO(user);
+		return new UserRequest(user);
 	}
 
 	@Transactional
@@ -57,7 +57,7 @@ public class UserService {
 		}
 	}
 
-	public void convertDtoToModel(UserDTO request, User user) {
+	public void convertDtoToModel(UserRequest request, User user) {
 		user.setName(request.getName());
 		user.setEmail(request.getEmail());
 		user.setPassword(request.getPassword());

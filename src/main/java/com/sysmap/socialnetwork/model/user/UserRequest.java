@@ -1,11 +1,10 @@
-package com.sysmap.socialnetwork.model.dto;
+package com.sysmap.socialnetwork.model.user;
 
 import java.io.Serializable;
-import java.util.UUID;
+import java.util.Set;
 
-import com.sysmap.socialnetwork.model.User;
+import com.sysmap.socialnetwork.model.Follower;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,22 +12,23 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserDTO implements Serializable {
+public class UserRequest implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Setter(AccessLevel.NONE)
-	private UUID id;
+
 	private String name;
 	private String email;
 	private String password;
 	private String profilePictureUri;
+	
+	private Set<Follower> follower;
 
-	public UserDTO(User entity) {
-		id = entity.getId();
+	public UserRequest(User entity) {
 		name = entity.getName();
 		email = entity.getEmail();
 		password = entity.getPassword();
 		profilePictureUri = entity.getProfilePictureUri();
+		follower = entity.getFollowers();
 	}
 
 }

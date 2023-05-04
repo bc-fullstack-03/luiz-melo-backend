@@ -11,8 +11,6 @@ import java.util.UUID;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.sysmap.socialnetwork.model.dto.AuthorDTO;
-
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,7 +36,7 @@ public class Post implements Serializable {
 	@Setter(AccessLevel.NONE)	
 	private Set<Like> likes = new HashSet<>();
 	
-	public Post(String content, AuthorDTO user) {
+	public Post(String content, Author user) {
 		super();
 		id = UUID.randomUUID();
 		date = LocalDateTime.now();

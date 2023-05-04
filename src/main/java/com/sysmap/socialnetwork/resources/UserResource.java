@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.sysmap.socialnetwork.model.User;
-import com.sysmap.socialnetwork.model.dto.UserDTO;
+import com.sysmap.socialnetwork.model.user.User;
+import com.sysmap.socialnetwork.model.user.UserRequest;
 import com.sysmap.socialnetwork.services.UserService;
 
 @RestController
@@ -29,30 +29,30 @@ public class UserResource {
 	private UserService service;
 	
 	@GetMapping
-	public ResponseEntity<Page<UserDTO>> findAll(Pageable pageable){
+	public ResponseEntity<Page<UserRequest>> findAll(Pageable pageable){
 		Page<User> page = service.findAllPaged(pageable);
-		var pageResponse = page.map(x -> new UserDTO(x));
+		var pageResponse = page.map(x -> new UserRequest(x));
 		return ResponseEntity.ok(pageResponse);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<UserDTO> findById(@PathVariable UUID id){
+	public ResponseEntity<UserRequest> findById(@PathVariable UUID id){
 		var user = service.findById(id);
-		return ResponseEntity.ok(new UserDTO(user));
+		return ResponseEntity.ok(new UserRequest(user));
 	}
 	
 	@PostMapping()
-	public ResponseEntity<UUID> insert(@RequestBody UserDTO request) {
+	public ResponseEntity<Void> insert(@RequestBody UserRequest request) {
 		service.insert(request);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(request)
 				.toUri();
-		return ResponseEntity.created(uri).body(request.getId());
+		return ResponseEntity.created(uri).build();
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<UUID> update(@PathVariable UUID id, @RequestBody UserDTO request) {
+	public ResponseEntity<Void> update(@PathVariable UUID id, @RequestBody UserRequest request) {
 		service.update(id, request);
-		return ResponseEntity.ok(request.getId());
+		return ResponseEntity.noContent().build();
 	}
 	
 	@DeleteMapping(value = "/{id}")
