@@ -27,7 +27,7 @@ public class User implements Serializable{
 	private String name;
 	private String email;
 	private String password; 
-	private String profilePictureUri;
+	private String photoUri;
 	
 	@Setter(AccessLevel.NONE)
 	private Set<Follower> followers = new HashSet<>();

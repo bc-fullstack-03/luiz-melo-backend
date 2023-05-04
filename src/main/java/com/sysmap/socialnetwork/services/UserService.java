@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sysmap.socialnetwork.model.user.User;
-import com.sysmap.socialnetwork.model.user.UserRequest;
+import com.sysmap.socialnetwork.model.user.requests.UserRequest;
 import com.sysmap.socialnetwork.repositories.UserRepository;
 import com.sysmap.socialnetwork.services.exception.NotFoundException;
 
@@ -41,9 +41,8 @@ public class UserService {
 
 	@Transactional
 	public UserRequest update(UUID id, UserRequest request) {
-		User user = repository.findById(id).get();
-		convertDtoToModel(request, user);
-		// var user = convertDtoToModel(userDTO, userOptional.get());
+		var user = repository.findById(id).orElseThrow(() -> new NotFoundException("Id doesn't exists"));
+		convertRequestToModel(request, user);
 		user = repository.save(user);
 		return new UserRequest(user);
 	}
@@ -57,11 +56,11 @@ public class UserService {
 		}
 	}
 
-	public void convertDtoToModel(UserRequest request, User user) {
+	public void convertRequestToModel(UserRequest request, User user) {
 		user.setName(request.getName());
 		user.setEmail(request.getEmail());
 		user.setPassword(request.getPassword());
-		user.setProfilePictureUri(request.getProfilePictureUri());
+		user.setPhotoUri(request.getPhotoUri());
 	}
 
 }

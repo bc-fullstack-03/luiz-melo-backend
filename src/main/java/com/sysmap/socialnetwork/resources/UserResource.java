@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sysmap.socialnetwork.model.user.User;
-import com.sysmap.socialnetwork.model.user.UserRequest;
+import com.sysmap.socialnetwork.model.user.requests.UserRequest;
+import com.sysmap.socialnetwork.model.user.responses.UserResponse;
 import com.sysmap.socialnetwork.services.UserService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -29,20 +32,20 @@ public class UserResource {
 	private UserService service;
 	
 	@GetMapping
-	public ResponseEntity<Page<UserRequest>> findAll(Pageable pageable){
+	public ResponseEntity<Page<UserResponse>> findAll(Pageable pageable){
 		Page<User> page = service.findAllPaged(pageable);
-		var pageResponse = page.map(x -> new UserRequest(x));
+		var pageResponse = page.map(x -> new UserResponse(x));
 		return ResponseEntity.ok(pageResponse);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<UserRequest> findById(@PathVariable UUID id){
+	public ResponseEntity<UserResponse> findById(@PathVariable UUID id){
 		var user = service.findById(id);
-		return ResponseEntity.ok(new UserRequest(user));
+		return ResponseEntity.ok(new UserResponse(user));
 	}
 	
 	@PostMapping()
-	public ResponseEntity<Void> insert(@RequestBody UserRequest request) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody UserRequest request) {
 		service.insert(request);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(request)
 				.toUri();
@@ -50,7 +53,7 @@ public class UserResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Void> update(@PathVariable UUID id, @RequestBody UserRequest request) {
+	public ResponseEntity<Void> update(@PathVariable UUID id, @Valid  @RequestBody UserRequest request) {
 		service.update(id, request);
 		return ResponseEntity.noContent().build();
 	}

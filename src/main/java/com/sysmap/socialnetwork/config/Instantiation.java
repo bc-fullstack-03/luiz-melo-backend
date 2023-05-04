@@ -25,10 +25,10 @@ public class Instantiation implements CommandLineRunner {
 		
 		userRepository.deleteAll();
 		
-		var luiz = new User("Luiz", "luiz@gmail.com", "12345");
+		var luiz = new User("Luiz", "luiz@gmail.com", "12343645");
 		User beatriz = new User("Bea", "bea@email.com", "12345");
-		var julio = new User("Julio", "julio@email.com", "12345");
-		var oliver = new User("Oliver", "oliver@email.com", "12345");
+		var julio = new User("Julio", "julio@email.com", "1332345");
+		var oliver = new User("Oliver", "oliver@email.com", "1234545");
 		
 				
 		userRepository.saveAll(Arrays.asList(luiz, beatriz, oliver, julio));
