@@ -5,10 +5,10 @@ import java.util.UUID;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.sysmap.socialnetwork.model.Post;
+import com.sysmap.socialnetwork.model.post.Post;
 
 public interface PostRepository  extends MongoRepository<Post, UUID>{
 	
-	List<Post> findPostByUserId(UUID userId);
+	List<Post> findByUserId(UUID id);
 	
 }

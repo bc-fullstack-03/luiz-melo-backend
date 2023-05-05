@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sysmap.socialnetwork.model.user.User;
-import com.sysmap.socialnetwork.model.user.requests.UserRequest;
-import com.sysmap.socialnetwork.model.user.responses.UserResponse;
-import com.sysmap.socialnetwork.services.UserService;
+import com.sysmap.socialnetwork.services.user.IUserService;
+import com.sysmap.socialnetwork.services.user.request.CreateUserRequest;
+import com.sysmap.socialnetwork.services.user.request.UpdateUserRequest;
+import com.sysmap.socialnetwork.services.user.response.FindAllUserResponse;
+import com.sysmap.socialnetwork.services.user.response.FindOneUserResponse;
 
 import jakarta.validation.Valid;
 
@@ -29,38 +31,45 @@ import jakarta.validation.Valid;
 public class UserResource {
 
 	@Autowired
-	private UserService service;
+	private IUserService service;
 	
 	@GetMapping
-	public ResponseEntity<Page<UserResponse>> findAll(Pageable pageable){
-		Page<User> page = service.findAllPaged(pageable);
-		var pageResponse = page.map(x -> new UserResponse(x));
+	public ResponseEntity<Page<FindAllUserResponse>> findAllUser(Pageable pageable){
+		Page<User> page = service.findAllUser(pageable);
+		var pageResponse = page.map(FindAllUserResponse::new);
 		return ResponseEntity.ok(pageResponse);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<UserResponse> findById(@PathVariable UUID id){
-		var user = service.findById(id);
-		return ResponseEntity.ok(new UserResponse(user));
+	public ResponseEntity<FindOneUserResponse> findUserById(@PathVariable UUID id){
+		var user = service.findUserById(id);
+		return ResponseEntity.ok(new FindOneUserResponse(user));
 	}
 	
-	@PostMapping()
-	public ResponseEntity<Void> insert(@Valid @RequestBody UserRequest request) {
-		service.insert(request);
+	
+	@GetMapping(value = "/email/{email}")
+	public ResponseEntity<FindOneUserResponse> findUserByEmail(@PathVariable String email){
+		var user = service.findUserByEmail(email);
+		return ResponseEntity.ok(new FindOneUserResponse(user));
+	}
+	
+	@PostMapping
+	public ResponseEntity<Void> createUser(@Valid @RequestBody CreateUserRequest request) {
+		service.createUser(request);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(request)
 				.toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Void> update(@PathVariable UUID id, @Valid  @RequestBody UserRequest request) {
-		service.update(id, request);
+	public ResponseEntity<Void> updateUser(@PathVariable UUID id, @Valid  @RequestBody UpdateUserRequest request) {
+		service.updateUser(id, request);
 		return ResponseEntity.noContent().build();
 	}
 	
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> deleteById(@PathVariable UUID id) {
-		service.delete(id);
+	public ResponseEntity<Void> deleteUserById(@PathVariable UUID id) {
+		service.deleteUserById(id);
 		return ResponseEntity.noContent().build();
 	}
 

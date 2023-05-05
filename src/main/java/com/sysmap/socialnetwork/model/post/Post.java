@@ -1,4 +1,4 @@
-package com.sysmap.socialnetwork.model;
+package com.sysmap.socialnetwork.model.post;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -33,16 +33,16 @@ public class Post implements Serializable {
 	@Setter(AccessLevel.NONE)
 	private List<Comment> comments = new ArrayList<>();
 	
-	@Setter(AccessLevel.NONE)	
+	@Setter(AccessLevel.NONE)
 	private Set<Like> likes = new HashSet<>();
 	
-	public Post(String content, Author user) {
+	public Post(String content, UUID userId, String userName) {
 		super();
 		id = UUID.randomUUID();
-		date = LocalDateTime.now();
-		userId = user.getUserId();
-		userName = user.getName();
+		this.userId = userId;
+		this.userName = userName;
 		this.content = content;
+		date = LocalDateTime.now();
 	}
 
 }

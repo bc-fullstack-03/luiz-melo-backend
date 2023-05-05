@@ -1,8 +1,6 @@
-package com.sysmap.socialnetwork.model;
+package com.sysmap.socialnetwork.model.user;
 
 import java.util.UUID;
-
-import com.sysmap.socialnetwork.model.user.User;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

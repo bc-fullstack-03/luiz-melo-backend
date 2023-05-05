@@ -1,4 +1,4 @@
-package com.sysmap.socialnetwork.model;
+package com.sysmap.socialnetwork.model.post;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
