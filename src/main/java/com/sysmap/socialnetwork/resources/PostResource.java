@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.sysmap.socialnetwork.model.post.Post;
+import com.sysmap.socialnetwork.models.post.Post;
 import com.sysmap.socialnetwork.services.post.PostService;
 import com.sysmap.socialnetwork.services.post.request.InsertPostRequest;
 import com.sysmap.socialnetwork.services.post.response.GetAllPostResponse;
@@ -30,6 +30,7 @@ public class PostResource {
 	@Autowired
 	private PostService service;
 
+	
 	@GetMapping
 	public ResponseEntity<Page<GetAllPostResponse>> findAllPost(Pageable pageable) {
 		Page<Post> post = service.findaAllPosts(pageable);
@@ -49,18 +50,19 @@ public class PostResource {
 		Post post = service.findPostById(id);
 		return ResponseEntity.ok(new GetOnePostResponse(post));
 	}
-	
+
 	@PostMapping
-	public void insertPost(@RequestBody InsertPostRequest request) {
+	public void insertPost(@RequestBody InsertPostRequest request) {		
 		service.insertPost(request);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(request).toUri();
 		ResponseEntity.created(uri).build();
 	}
-	
+
+
 	@DeleteMapping(value = "/{id}")
 	public void deletePost(@PathVariable UUID id) {
 		service.deletePost(id);
 		ResponseEntity.noContent().build();
 	}
-	
+
 }

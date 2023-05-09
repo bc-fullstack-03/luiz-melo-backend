@@ -2,7 +2,7 @@ package com.sysmap.socialnetwork.services.user.request;
 
 import java.io.Serializable;
 
-import com.sysmap.socialnetwork.model.user.User;
+import com.sysmap.socialnetwork.models.user.User;
 
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;

@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.Set;
 import java.util.UUID;
 
-import com.sysmap.socialnetwork.model.user.Follower;
-import com.sysmap.socialnetwork.model.user.User;
+import com.sysmap.socialnetwork.models.user.Follower;
+import com.sysmap.socialnetwork.models.user.User;
 
 import lombok.AccessLevel;
 import lombok.Getter;

@@ -9,17 +9,22 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sysmap.socialnetwork.model.post.Post;
+import com.sysmap.socialnetwork.models.post.Author;
+import com.sysmap.socialnetwork.models.post.Post;
 import com.sysmap.socialnetwork.repositories.PostRepository;
 import com.sysmap.socialnetwork.services.exception.NotFoundException;
 import com.sysmap.socialnetwork.services.post.request.InsertPostRequest;
+import com.sysmap.socialnetwork.services.user.IUserService;
 
 @Service
 public class PostService implements IPostService{
 
 	@Autowired
 	private PostRepository repository;
-
+	
+	@Autowired
+	private IUserService userService;
+	
 	@Transactional(readOnly = true)
 	public Page<Post> findaAllPosts(Pageable pageable){
 		return repository.findAll(pageable);
@@ -43,7 +48,8 @@ public class PostService implements IPostService{
 	
 	@Transactional
 	public void insertPost(InsertPostRequest request) {
-		var post = new Post(request.getContent(), request.getUserId(),request.getUserName());
+		var author = new Author(userService.findUserById(request.getUserId()));
+		var post = new Post(request.getContent(), author.getUserId(),author.getName());
 		repository.save(post);
 	}
 	

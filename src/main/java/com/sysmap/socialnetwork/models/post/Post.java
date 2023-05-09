@@ -1,4 +1,4 @@
-package com.sysmap.socialnetwork.model.post;
+package com.sysmap.socialnetwork.models.post;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import com.sysmap.socialnetwork.models.post.Comment;
+import com.sysmap.socialnetwork.models.post.Like;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

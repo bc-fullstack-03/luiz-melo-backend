@@ -1,4 +1,4 @@
-package com.sysmap.socialnetwork.model.user;
+package com.sysmap.socialnetwork.models.user;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -30,13 +30,10 @@ public class User implements Serializable{
 	@Setter(AccessLevel.NONE)
 	private Set<Follower> followers = new HashSet<>();
 	
-	public User(String name, String email, String password) {
+	public User(String name, String email) {
 		id = UUID.randomUUID();
 		this.name = name;
 		this.email = email;
-		this.password = password;
 	}
-	
-	
-	
+
 }

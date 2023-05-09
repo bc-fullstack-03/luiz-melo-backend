@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.sysmap.socialnetwork.model.post.Post;
+import com.sysmap.socialnetwork.models.post.Post;
 
 public interface PostRepository  extends MongoRepository<Post, UUID>{
 	

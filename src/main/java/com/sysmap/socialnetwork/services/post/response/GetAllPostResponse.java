@@ -3,7 +3,7 @@ package com.sysmap.socialnetwork.services.post.response;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import com.sysmap.socialnetwork.model.post.Post;
+import com.sysmap.socialnetwork.models.post.Post;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

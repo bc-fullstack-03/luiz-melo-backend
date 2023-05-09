@@ -1,4 +1,4 @@
-package com.sysmap.socialnetwork.model.user;
+package com.sysmap.socialnetwork.models.user;
 
 import java.util.UUID;
 

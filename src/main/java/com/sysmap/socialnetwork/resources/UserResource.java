@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.sysmap.socialnetwork.model.user.User;
+import com.sysmap.socialnetwork.models.user.User;
 import com.sysmap.socialnetwork.services.user.IUserService;
 import com.sysmap.socialnetwork.services.user.request.CreateUserRequest;
 import com.sysmap.socialnetwork.services.user.request.UpdateUserRequest;
@@ -32,7 +32,7 @@ public class UserResource {
 
 	@Autowired
 	private IUserService service;
-	
+		
 	@GetMapping
 	public ResponseEntity<Page<FindAllUserResponse>> findAllUser(Pageable pageable){
 		Page<User> page = service.findAllUser(pageable);
@@ -46,11 +46,10 @@ public class UserResource {
 		return ResponseEntity.ok(new FindOneUserResponse(user));
 	}
 	
-	
 	@GetMapping(value = "/email/{email}")
 	public ResponseEntity<FindOneUserResponse> findUserByEmail(@PathVariable String email){
 		var user = service.findUserByEmail(email);
-		return ResponseEntity.ok(new FindOneUserResponse(user));
+		return ResponseEntity.ok(user);
 	}
 	
 	@PostMapping

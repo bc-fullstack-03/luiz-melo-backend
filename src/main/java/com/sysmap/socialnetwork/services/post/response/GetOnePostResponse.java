@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import com.sysmap.socialnetwork.model.post.Comment;
-import com.sysmap.socialnetwork.model.post.Like;
-import com.sysmap.socialnetwork.model.post.Post;
+import com.sysmap.socialnetwork.models.post.Comment;
+import com.sysmap.socialnetwork.models.post.Like;
+import com.sysmap.socialnetwork.models.post.Post;
 
 import lombok.AccessLevel;
 import lombok.Getter;

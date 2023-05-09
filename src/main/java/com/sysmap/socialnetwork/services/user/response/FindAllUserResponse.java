@@ -3,7 +3,7 @@ package com.sysmap.socialnetwork.services.user.response;
 import java.io.Serializable;
 import java.util.UUID;
 
-import com.sysmap.socialnetwork.model.user.User;
+import com.sysmap.socialnetwork.models.user.User;
 
 import lombok.AccessLevel;
 import lombok.Getter;

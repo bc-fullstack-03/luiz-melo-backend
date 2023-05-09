@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.sysmap.socialnetwork.services.exception.ArgumentNotValidException;
 import com.sysmap.socialnetwork.services.exception.NotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,17 +23,22 @@ public class ResourceExceptionHandler {
 		HttpStatus status = HttpStatus.NOT_FOUND;
 		String error = "Resource not found";
 
-		standardErrorMethod(status, error, e, request, standardError);
+		insertStandardError(status, error, e, request, standardError);
 		return ResponseEntity.status(status).body(standardError);
 	}
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<ValidationError> validation(MethodArgumentNotValidException e, HttpServletRequest request) {
+		
 		HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+		
 		var validationError = new ValidationError();
+		
 		String error = "Validation Exception";
-		standardErrorMethod(status, error, e, request, validationError);
-				
+		
+		insertStandardError(status, error, e, request, validationError);
+		validationError.setMessage("");
+		
 		for(FieldError fieldError : e.getBindingResult().getFieldErrors()) {
 			validationError.addError(fieldError.getField(), fieldError.getDefaultMessage());
 		}
@@ -40,7 +46,17 @@ public class ResourceExceptionHandler {
 		return ResponseEntity.status(status).body(validationError);
 	}
 	
-	public void standardErrorMethod(HttpStatus status, String error, Exception e,
+	@ExceptionHandler(ArgumentNotValidException.class)
+	public ResponseEntity<StandardError> argumentNotValid(ArgumentNotValidException e, HttpServletRequest request) {
+		var standardError = new StandardError();
+		HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+		String error = "Validation Exception";
+
+		insertStandardError(status, error, e, request, standardError);
+		return ResponseEntity.status(status).body(standardError);
+	}
+	
+	public void insertStandardError(HttpStatus status, String error, Exception e,
 			HttpServletRequest request, StandardError standardError) {		
 		standardError.setTimestamp(Instant.now());
 		standardError.setStatus(status.value());
