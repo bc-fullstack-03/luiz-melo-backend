@@ -44,19 +44,19 @@ public class UserResource {
 		return ResponseEntity.ok(pageResponse);
 	}
 	
-	@GetMapping(value = "/user/{id}")
+	@GetMapping(value = "/profile/{id}")
 	public ResponseEntity<FindOneUserResponse> findUserById(@PathVariable UUID id){
 		var user = service.findUserById(id);
 		return ResponseEntity.ok(new FindOneUserResponse(user));
 	}
 	
-	@GetMapping(value = "/user/email/{email}")
+	@GetMapping(value = "/profile/email/{email}")
 	public ResponseEntity<FindOneUserResponse> findUserByEmail(@PathVariable String email){
 		var user = service.findUserByEmail(email);
 		return ResponseEntity.ok(user);
 	}
 	
-	@PostMapping(value = "/users")
+	@PostMapping(value = "/singup")
 	public ResponseEntity<Void> createUser(@Valid @RequestBody CreateUserRequest request) {
 		service.createUser(request);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(request)

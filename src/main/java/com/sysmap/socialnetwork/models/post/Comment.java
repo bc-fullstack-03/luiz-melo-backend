@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class Comment implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	private UUID commentId;
 	private String content;
 	private LocalDateTime date;
 	private UUID authorId;
@@ -22,6 +23,7 @@ public class Comment implements Serializable {
 	private Set<Like> likes = new HashSet<>();
 	
 	public Comment(String content, Author author) {
+		commentId = UUID.randomUUID();
 		this.content = content;
 		date = LocalDateTime.now();
 		authorId = author.getUserId();

@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sysmap.socialnetwork.models.post.Post;
 import com.sysmap.socialnetwork.services.post.PostService;
+import com.sysmap.socialnetwork.services.post.request.InsertCommentRequest;
 import com.sysmap.socialnetwork.services.post.request.InsertPostRequest;
 import com.sysmap.socialnetwork.services.post.response.GetAllPostResponse;
 import com.sysmap.socialnetwork.services.post.response.GetOnePostResponse;
@@ -32,8 +33,8 @@ public class PostResource {
 
 	
 	@GetMapping(value="/feed")
-	public ResponseEntity<Page<GetAllPostResponse>> findAllPost(Pageable pageable) {
-		Page<Post> post = service.findaAllPosts(pageable);
+	public ResponseEntity<Page<GetAllPostResponse>> feed(Pageable pageable) {
+		Page<Post> post = service.feed(pageable);
 		var pageResponse = post.map(GetAllPostResponse::new);
 		return ResponseEntity.ok(pageResponse);
 	}
@@ -63,6 +64,13 @@ public class PostResource {
 	public void deletePost(@PathVariable UUID id) {
 		service.deletePost(id);
 		ResponseEntity.noContent().build();
+	}	
+	
+	@PostMapping(value = "/post/{id}/comment")
+	public void insertPost(@PathVariable UUID id, @RequestBody InsertCommentRequest request) {		
+		service.insertComment(id,request);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/post/{id}").buildAndExpand(request).toUri();
+		ResponseEntity.created(uri).build();
 	}
 
 }
