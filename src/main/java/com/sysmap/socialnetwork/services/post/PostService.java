@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sysmap.socialnetwork.models.post.Author;
 import com.sysmap.socialnetwork.models.post.Comment;
+import com.sysmap.socialnetwork.models.post.Like;
 import com.sysmap.socialnetwork.models.post.Post;
 import com.sysmap.socialnetwork.repositories.PostRepository;
 import com.sysmap.socialnetwork.services.exception.NotFoundException;
@@ -62,12 +63,19 @@ public class PostService implements IPostService{
 	}
 	
 	@Transactional
+	public void insertLikeInThePost(UUID postId, Like request) {
+		var author = new Author(userService.findUserById(request.getUserId()));
+		var post = findPostById(postId);
+		post.getLikes().add(new Like(author));
+		repository.save(post);
+	}
+	
+	@Transactional
 	public void insertComment(UUID postId, InsertCommentRequest request) {
 		var author = new Author(userService.findUserById(request.getAuthorId()));
 		var post = findPostById(postId);
 		post.getComments().add(new Comment(request.getContent(), author));
 		repository.save(post);
 	}
-
 	
 }

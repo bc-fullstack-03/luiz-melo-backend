@@ -2,7 +2,6 @@ package com.sysmap.socialnetwork.models.post;
 
 import java.util.UUID;
 
-import com.sysmap.socialnetwork.models.post.Author;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

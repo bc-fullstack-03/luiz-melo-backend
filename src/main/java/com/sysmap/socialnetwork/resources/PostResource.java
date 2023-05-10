@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.sysmap.socialnetwork.models.post.Like;
 import com.sysmap.socialnetwork.models.post.Post;
 import com.sysmap.socialnetwork.services.post.PostService;
 import com.sysmap.socialnetwork.services.post.request.InsertCommentRequest;
@@ -66,11 +67,17 @@ public class PostResource {
 		ResponseEntity.noContent().build();
 	}	
 	
-	@PostMapping(value = "/post/{id}/comment")
-	public void insertPost(@PathVariable UUID id, @RequestBody InsertCommentRequest request) {		
-		service.insertComment(id,request);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/post/{id}").buildAndExpand(request).toUri();
-		ResponseEntity.created(uri).build();
+	@PostMapping(value = "/post/{postId}")
+	public void insertLikeInThePost(@PathVariable UUID postId, @RequestBody Like request) {		
+		service.insertLikeInThePost(postId,request);
+		ResponseEntity.noContent().build();
 	}
-
+	
+	@PostMapping(value = "/post/{postId}/comment")
+	public void insertComment(@PathVariable UUID postId, @RequestBody InsertCommentRequest request) {		
+		service.insertComment(postId,request);
+		ResponseEntity.noContent().build();
+	}
+	
+	
 }

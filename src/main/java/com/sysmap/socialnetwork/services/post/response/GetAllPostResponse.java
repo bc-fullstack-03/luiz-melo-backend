@@ -17,6 +17,8 @@ public class GetAllPostResponse {
 	private UUID userId;
 	private String content;
 	private LocalDateTime date;
+	private Integer likes;
+	private Integer comments;
 	
 	public GetAllPostResponse(Post entity) {
 		postId = entity.getId();
@@ -24,5 +26,7 @@ public class GetAllPostResponse {
 		userId = entity.getUserId();
 		content = entity.getContent();
 		date = entity.getDate();
+		likes = entity.getLikes().size();
+		comments = entity.getComments().size();
 	}
 }
