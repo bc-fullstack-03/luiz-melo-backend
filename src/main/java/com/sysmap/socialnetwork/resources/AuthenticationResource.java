@@ -12,7 +12,7 @@ import com.sysmap.socialnetwork.services.authentication.AuthenticateResponse;
 import com.sysmap.socialnetwork.services.authentication.IAuthenticationService;
 
 @RestController
-@RequestMapping(value = "/login")
+@RequestMapping(value = "api/v1/login")
 public class AuthenticationResource {
 	
 	@Autowired

@@ -28,7 +28,10 @@ public class User implements Serializable{
 	private String photoUri;
 	
 	@Setter(AccessLevel.NONE)
-	private Set<Follower> followers = new HashSet<>();
+	private Set<Follow> followers = new HashSet<>();
+
+	@Setter(AccessLevel.NONE)
+	private Set<Follow> following = new HashSet<>();
 	
 	public User(String name, String email) {
 		id = UUID.randomUUID();

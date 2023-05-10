@@ -24,42 +24,42 @@ import com.sysmap.socialnetwork.services.post.response.GetAllPostResponse;
 import com.sysmap.socialnetwork.services.post.response.GetOnePostResponse;
 
 @RestController
-@RequestMapping(value = "/posts")
+@RequestMapping(value = "api/v1")
 public class PostResource {
 
 	@Autowired
 	private PostService service;
 
 	
-	@GetMapping
+	@GetMapping(value="/feed")
 	public ResponseEntity<Page<GetAllPostResponse>> findAllPost(Pageable pageable) {
 		Page<Post> post = service.findaAllPosts(pageable);
 		var pageResponse = post.map(GetAllPostResponse::new);
 		return ResponseEntity.ok(pageResponse);
 	}
 
-	@GetMapping(value = "/user/{id}")
+	@GetMapping(value = "/post/user/{id}")
 	public ResponseEntity<List<GetAllPostResponse>> findPostByUserId(@PathVariable UUID id) {
 		List<Post> post = service.findPostByUserId(id);
 		List<GetAllPostResponse> list = post.stream().map(GetAllPostResponse::new).toList();
 		return ResponseEntity.ok(list);
 	}
 
-	@GetMapping(value = "{id}")
+	@GetMapping(value = "/post/{id}")
 	public ResponseEntity<GetOnePostResponse> findPostById(@PathVariable UUID id) {
 		Post post = service.findPostById(id);
 		return ResponseEntity.ok(new GetOnePostResponse(post));
 	}
 
-	@PostMapping
+	@PostMapping(value = "/post")
 	public void insertPost(@RequestBody InsertPostRequest request) {		
 		service.insertPost(request);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(request).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/post/{id}").buildAndExpand(request).toUri();
 		ResponseEntity.created(uri).build();
 	}
 
 
-	@DeleteMapping(value = "/{id}")
+	@DeleteMapping(value = "/post/{id}")
 	public void deletePost(@PathVariable UUID id) {
 		service.deletePost(id);
 		ResponseEntity.noContent().build();

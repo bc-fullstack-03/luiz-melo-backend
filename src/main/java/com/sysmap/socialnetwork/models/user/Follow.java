@@ -7,13 +7,16 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class Follower {
+public class Follow {
 	
 	private UUID userId;
 	private String username;
 	
+	public Follow(UUID userId) {
+		this.userId = userId;
+	}
 	
-	public Follower(User user) {
+	public Follow(User user) {
 		userId = user.getId();
 		username = user.getName();
 	}

@@ -1,10 +1,11 @@
 package com.sysmap.socialnetwork.services.user.response;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-import com.sysmap.socialnetwork.models.user.Follower;
+import com.sysmap.socialnetwork.models.user.Follow;
 import com.sysmap.socialnetwork.models.user.User;
 
 import lombok.AccessLevel;
@@ -23,16 +24,21 @@ public class FindOneUserResponse implements Serializable {
 	private String name;
 	private String email;
 	private String photoUri;
+ 
 	
 	@Setter(AccessLevel.NONE)
-	private Set<Follower> follower;
+	private Set<Follow> followers = new HashSet<>();
+
+	@Setter(AccessLevel.NONE)
+	private Set<Follow> following = new HashSet<>();
 
 	public FindOneUserResponse(User entity) {
 		id = entity.getId();
 		name = entity.getName();
 		email = entity.getEmail();
 		photoUri = entity.getPhotoUri();
-		follower = entity.getFollowers();
+		followers = entity.getFollowers();
+		following = entity.getFollowing();
 	}
 
 }
